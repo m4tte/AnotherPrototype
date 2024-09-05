@@ -6,81 +6,143 @@ public class PlayerWeaponManager : MonoBehaviour
 {
     PlayerUI s_PlayerUI;
 
+    public string p_WeaponName;
 
     [Header("FireRate")]
     public float p_WeaponFireRate;
 
-    [Header("AmmoAndMagazine")]
-    public int p_CurrAmmo;
-    public int p_MaxAmmo;
-    public int p_RoundLeft;
+    [Header("Ammo")]
+    public int p_TotalAmmo;
 
-    [Header("GrenadeStats")]
-    public GameObject p_Grenade;
-    public float p_ThrowForce;
-    public int p_GrenadeRemaining;
-
+    [Header("ProjectileStats")]
+    public float p_BulletSpeed;
+    public float p_BulletMaxDamage;
+    public float p_BulletMinDamage;
+    public float p_TimeBeforeSelfDestruct;
+    public AudioClip p_WeaponSoundClip;
 
 
     public GameObject p_Projectile;
     public Transform p_Spawnpos;
 
+    public bool isAuto;
 
-    public bool p_Reloading;
-    public float p_ReloadTimeLeft;
     float nexttime_ToFire;
 
-
+    public GameObject WeaponObject;
+    public bool WeaponEquipped;
     private void Start()
     {
         s_PlayerUI = FindObjectOfType<PlayerUI>();
-        s_PlayerUI.UpdateAmmoUI();
+        s_PlayerUI.UpdateWeaponUI();
     }
+    public void ChangeWeapon(Weapon wt)
+    {
+        if (WeaponEquipped)
+        {
+            GameObject w = Instantiate(WeaponObject, p_Spawnpos.position, p_Spawnpos.rotation);
+            Weapon weapon = w.GetComponent<Weapon>();
+            weapon.p_WeaponName = p_WeaponName;
+            weapon.p_WeaponFireRate = p_WeaponFireRate;
+            weapon.p_TotalAmmo = p_TotalAmmo;
+            weapon.p_BulletSpeed = p_BulletSpeed;
+            weapon.p_BulletMaxDamage = p_BulletMaxDamage;
+            weapon.p_BulletMinDamage = p_BulletMinDamage;
+            weapon.p_TimeBeforeSelfDestruct = p_TimeBeforeSelfDestruct;
+            weapon.p_WeaponSoundClip = p_WeaponSoundClip;
+            weapon.isAuto = isAuto;
+        }
 
+        p_WeaponName = wt.p_WeaponName;
+        p_WeaponFireRate = wt.p_WeaponFireRate;
+        p_TotalAmmo = wt.p_TotalAmmo;
+        p_BulletSpeed = wt.p_BulletSpeed;
+        p_BulletMaxDamage = wt.p_BulletMaxDamage;
+        p_BulletMinDamage = wt.p_BulletMinDamage;
+        p_TimeBeforeSelfDestruct = wt.p_TimeBeforeSelfDestruct;
+        p_WeaponSoundClip = wt.p_WeaponSoundClip;
+        isAuto = wt.isAuto;
+        WeaponEquipped = true;
+
+        s_PlayerUI.UpdateWeaponUI();
+    }
+    public void ClearWeapon()
+    {
+        p_WeaponName = null;
+        p_WeaponFireRate = 0;
+        p_TotalAmmo = 0;
+        p_BulletSpeed = 0;
+        p_BulletMaxDamage = 0;
+        p_BulletMinDamage = 0;
+        p_TimeBeforeSelfDestruct = 0;
+        p_WeaponSoundClip = null;
+        isAuto = false;
+        WeaponEquipped = false;
+        s_PlayerUI.UpdateWeaponUI();
+    }
     private void Update()
     {
 
-
-        if (Input.GetButtonDown("Fire") && Time.time >= nexttime_ToFire && p_CurrAmmo > 0)
+        if (isAuto)
         {
-            nexttime_ToFire = Time.time + 1f /p_WeaponFireRate;
+            if (Input.GetButton("Fire") && Time.time >= nexttime_ToFire && p_TotalAmmo > 0)
+            {
+                nexttime_ToFire = Time.time + 1f / p_WeaponFireRate;
+                Shoot();
+                p_TotalAmmo--;
+                s_PlayerUI.UpdateWeaponUI();
+            }
+        }
+        else if (Input.GetButtonDown("Fire") && Time.time >= nexttime_ToFire && p_TotalAmmo > 0)
+        {
+            nexttime_ToFire = Time.time + 1f / p_WeaponFireRate;
             Shoot();
-            p_CurrAmmo--;
-            s_PlayerUI.UpdateAmmoUI();
-/*            s_Weapon[weaponEquipped].p_CurrMagCount--;
-            s_PlayerUI.UpdateAmmoUI(s_Weapon[weaponEquipped]);*/
+            p_TotalAmmo--;
+            s_PlayerUI.UpdateWeaponUI();
+
         }
-        if (Input.GetKeyDown(KeyCode.R) && p_CurrAmmo < p_MaxAmmo && p_RoundLeft > 0)
+        if (Input.GetKeyDown(KeyCode.G))
         {
-            p_RoundLeft--;
-            p_CurrAmmo++;
-            s_PlayerUI.ReloadAmmoUI();
+            ThrowWeapon();
         }
-        if (Input.GetKeyDown(KeyCode.G) && p_GrenadeRemaining > 0)
-            ThrowGrenade();
     }
 
     public void Shoot()
     {
         GameObject p = Instantiate(p_Projectile, p_Spawnpos.position, p_Spawnpos.rotation);
-
+        int damage = (int)(Random.Range(p_BulletMinDamage, p_BulletMaxDamage));
+        p_Projectile.GetComponent<PlayerProjectile>().SetProjectileStats(p_BulletSpeed, damage);
     }
-    public void AddAmmo(int ammo)
+    public void ThrowWeapon()
     {
-        p_RoundLeft += ammo;
-        s_PlayerUI.ReloadAmmoUI();
+        GameObject w = Instantiate(WeaponObject,p_Spawnpos.position, p_Spawnpos.rotation);
+        Weapon weapon =  w.GetComponent<Weapon>();
+        weapon.p_WeaponName = p_WeaponName;
+        weapon.p_WeaponFireRate = p_WeaponFireRate;
+        weapon.p_TotalAmmo = p_TotalAmmo;
+        weapon.p_BulletSpeed = p_BulletSpeed;
+        weapon.p_BulletMaxDamage = p_BulletMaxDamage;
+        weapon.p_BulletMinDamage = p_BulletMinDamage;
+        weapon.p_TimeBeforeSelfDestruct = p_TimeBeforeSelfDestruct;
+        weapon.p_WeaponSoundClip = p_WeaponSoundClip;
+        weapon.isAuto = isAuto;
+
+        Rigidbody w_rb = w.GetComponent<Rigidbody>();
+        w_rb.velocity = transform.forward * 30f;
+        ClearWeapon();
+        gameObject.SetActive(false);
     }
-    void ThrowGrenade()
-    {
-        // Instantiate the grenade at the player's position
-        GameObject grenade = Instantiate(p_Grenade, p_Spawnpos.position, p_Spawnpos.rotation);
+    /*    void ThrowGrenade()
+        {
+            // Instantiate the grenade at the player's position
+            GameObject grenade = Instantiate(p_Grenade, p_Spawnpos.position, p_Spawnpos.rotation);
 
-        // Add force to the grenade
-        Rigidbody rb = grenade.GetComponent<Rigidbody>();
-        rb.AddForce(-(transform.forward * p_ThrowForce), ForceMode.VelocityChange);
+            // Add force to the grenade
+            Rigidbody rb = grenade.GetComponent<Rigidbody>();
+            rb.AddForce(-(transform.forward * p_ThrowForce), ForceMode.VelocityChange);
 
-        p_GrenadeRemaining--;
+            p_GrenadeRemaining--;
 
-        s_PlayerUI.UpdateGrenadeUI();
-    }
+            s_PlayerUI.UpdateGrenadeUI();
+        }*/
 }

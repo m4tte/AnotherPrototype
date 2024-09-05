@@ -13,14 +13,11 @@ MonoBehaviour:
   m_Name: Bren Gun
   m_EditorClassIdentifier: 
   GunShotAudio: {fileID: 8300000, guid: aa4b07ddc444e2d409b3dd442337b1c4, type: 3}
-  WeaponName: Bren Gun
-  FireRate: 6
-  ReloadTime: 5
-  BulletSpeed: 30
+  p_WeaponName: Bren Gun
+  p_WeaponFireRate: 6
+  p_TotalAmmo: 30
+  p_BulletSpeed: 35
+  p_BulletMaxDamage: 15
+  p_BulletMinDamage: 10
   p_TimeBeforeSelfDestruct: 3
-  MaxAmmo: 300
-  MaxMagCount: 30
-  MaxDamage: 12
-  MinDamage: 8
   isAuto: 1
-  Shotgun: 0

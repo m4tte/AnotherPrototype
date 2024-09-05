@@ -13,15 +13,11 @@ MonoBehaviour:
   m_Name: Pistol
   m_EditorClassIdentifier: 
   GunShotAudio: {fileID: 8300000, guid: 49c89821b8d82554bbb63850e01f46e2, type: 3}
-  WeaponName: M1911
-  FireRate: 1
-  ReloadTime: 2
-  BulletSpeed: 35
+  p_WeaponName: Pistol
+  p_WeaponFireRate: 2
+  p_TotalAmmo: 10
+  p_BulletSpeed: 30
+  p_BulletMaxDamage: 10
+  p_BulletMinDamage: 8
   p_TimeBeforeSelfDestruct: 3
-  MaxAmmo: 999
-  MaxMagCount: 10
-  MaxDamage: 4
-  MinDamage: 7
   isAuto: 0
-  isDefaultWeapon: 1
-  Shotgun: 0

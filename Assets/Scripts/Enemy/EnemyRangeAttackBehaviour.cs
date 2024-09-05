@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyRangeAttackBehaviour : MonoBehaviour
 {
+    public WeaponType e_weaponType;
+
     public GameObject e_Projectile;
     public Transform e_SpawnPos;
     public float e_RateOfAttack;
@@ -20,7 +22,7 @@ public class EnemyRangeAttackBehaviour : MonoBehaviour
     {
         if (Time.time >= nexttime_ToFire)
         {
-            nexttime_ToFire = Time.time + 1f / e_RateOfAttack;
+            nexttime_ToFire = Time.time + 1f / e_weaponType.p_WeaponFireRate;
             if (e_GrenadeEnemy)
             {
                 GameObject grenade = Instantiate(e_Grenade, e_SpawnPos.position, e_SpawnPos.rotation);

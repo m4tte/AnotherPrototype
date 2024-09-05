@@ -6,13 +6,15 @@ public class ExplosivePropObjects : MonoBehaviour
 {
     public int health;
     public GameObject Explosion;
-    public void TakeDamage(int dmg)
+
+
+    private void OnTriggerEnter(Collider other)
     {
-        health -= dmg;
-        if (health <= 0)
+        if (other.GetComponent<PlayerProjectile>() !=null)
         {
             Instantiate(Explosion, transform.position, transform.rotation);
             Destroy(gameObject);
         }
+
     }
 }

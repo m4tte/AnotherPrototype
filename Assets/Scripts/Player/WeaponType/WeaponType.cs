@@ -7,20 +7,19 @@ public class WeaponType : ScriptableObject
 {
 
     public AudioClip GunShotAudio;
+    public string p_WeaponName;
 
-    public string WeaponName;
+    [Header("FireRate")]
+    public float p_WeaponFireRate;
 
-    public float FireRate;
-    public float ReloadTime;
-    public float BulletSpeed;
+    [Header("Ammo")]
+    public int p_TotalAmmo;
+
+    [Header("ProjectileStats")]
+    public float p_BulletSpeed;
+    public float p_BulletMaxDamage;
+    public float p_BulletMinDamage;
     public float p_TimeBeforeSelfDestruct;
 
-    public int MaxAmmo;
-    public int MaxMagCount;
-    public int MaxDamage;
-    public int MinDamage;
-
     public bool isAuto;
-    public bool isDefaultWeapon;
-    public bool Shotgun;
 }

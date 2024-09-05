@@ -13,13 +13,11 @@ MonoBehaviour:
   m_Name: Lee Enfield
   m_EditorClassIdentifier: 
   GunShotAudio: {fileID: 8300000, guid: 79d4bb35d304f3e4f856d549499cd02c, type: 3}
-  WeaponName: Lee Enfield
-  FireRate: 1.5
-  ReloadTime: 2
-  BulletSpeed: 50
+  p_WeaponName: Rifle
+  p_WeaponFireRate: 1.5
+  p_TotalAmmo: 10
+  p_BulletSpeed: 45
+  p_BulletMaxDamage: 25
+  p_BulletMinDamage: 20
   p_TimeBeforeSelfDestruct: 6
-  MaxAmmo: 60
-  MaxMagCount: 10
-  MaxDamage: 25
-  MinDamage: 22
-  Shotgun: 0
+  isAuto: 0

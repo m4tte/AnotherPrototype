@@ -13,15 +13,11 @@ MonoBehaviour:
   m_Name: Sten Gun
   m_EditorClassIdentifier: 
   GunShotAudio: {fileID: 8300000, guid: 49c89821b8d82554bbb63850e01f46e2, type: 3}
-  WeaponName: Sten Gun
-  FireRate: 8
-  ReloadTime: 2
-  BulletSpeed: 45
+  p_WeaponName: SMG
+  p_WeaponFireRate: 8
+  p_TotalAmmo: 20
+  p_BulletSpeed: 40
+  p_BulletMaxDamage: 20
+  p_BulletMinDamage: 15
   p_TimeBeforeSelfDestruct: 3
-  MaxAmmo: 300
-  MaxMagCount: 30
-  MaxDamage: 6
-  MinDamage: 4
   isAuto: 1
-  isDefaultWeapon: 0
-  Shotgun: 0

@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class PlayerRound : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+/*    private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<PlayerMovement>() != null)
         {
             FindObjectOfType<PlayerWeaponManager>().AddAmmo(1);
             Destroy(this.gameObject);
         }
-    }
+    }*/
 }

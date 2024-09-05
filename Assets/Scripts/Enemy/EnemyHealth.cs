@@ -11,7 +11,7 @@ public class EnemyHealth : MonoBehaviour
 
     public GameObject DeathSoundObject;
     public GameObject ExpDrop;
-    public GameObject Ammo;
+    public GameObject WeaponPrefab;
 
     private void Start()
     {
@@ -34,13 +34,18 @@ public class EnemyHealth : MonoBehaviour
                     rb.AddForce(explosionDirection * .5f, ForceMode.Impulse);
                 }
             }
-            GameObject ammo = Instantiate(Ammo, transform.position, transform.rotation);
-            Rigidbody a_rb = ammo.GetComponent<Rigidbody>();
-            Vector3 AmmoDirection = Random.insideUnitSphere.normalized;
-            if (a_rb != null)
+            if (GetComponent<EnemyRangeAttackBehaviour>() != null)
             {
-                a_rb.AddForce(AmmoDirection * .5f, ForceMode.Impulse);
+                GameObject weapondrop = Instantiate(WeaponPrefab, transform.position, transform.rotation);
+                weapondrop.GetComponent<Weapon>().SetWeapon(GetComponent<EnemyRangeAttackBehaviour>().e_weaponType);
+                Rigidbody weapondrop_rb = weapondrop.GetComponent<Rigidbody>();
+                Vector3 AmmoDirection = Random.insideUnitSphere.normalized;
+                if (weapondrop_rb != null)
+                {
+                    weapondrop_rb.AddForce(AmmoDirection * .5f, ForceMode.Impulse);
+                }
             }
+
             FindObjectOfType<Flash>().Flashing();
             FindObjectOfType<CameraShake>().Shake(.1f, .75f, .75f);
             Destroy(gameObject);

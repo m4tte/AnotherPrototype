@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rb;
     public Transform groundCheck;
 
+    public GameObject PlayerWeapon;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -63,6 +64,7 @@ public class PlayerMovement : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
         rb.MovePosition(rb.position + velocity * Time.deltaTime);
     }
+
     void OnDrawGizmosSelected()
     {
         if (groundCheck == null) return;

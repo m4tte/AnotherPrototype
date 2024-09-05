@@ -18,7 +18,6 @@ public class PlayerUI : MonoBehaviour
     public TextMeshProUGUI t_CurrAmmoLeft;
     public TextMeshProUGUI t_WeaponName;
     public TextMeshProUGUI t_CurrGrenadeRemaining;
-    public GameObject[] bullet = new GameObject[6];
     [Header("EXPUI")]
     public Image i_EXP;
     public TextMeshProUGUI t_EXP;
@@ -31,7 +30,6 @@ public class PlayerUI : MonoBehaviour
     }
     private void Start()
     {
-        ReloadAmmoUI();
     }
     public void UpdateHealthUI()
     {
@@ -69,21 +67,10 @@ public class PlayerUI : MonoBehaviour
 
 
     }
-    public void UpdateAmmoUI()
+    public void UpdateWeaponUI()
     {
-        for (int i = 0; i < s_PlayerWeaponManager.p_CurrAmmo; i++)
-        {
-            bullet[i].SetActive(true);
-        }
-        for (int i = s_PlayerWeaponManager.p_CurrAmmo; i < 6; i++)
-        {
-            bullet[i].SetActive(false);
-        }
-    }
-    public void ReloadAmmoUI()
-    {
-        t_CurrAmmoLeft.text = "x" + s_PlayerWeaponManager.p_RoundLeft.ToString();
-        UpdateAmmoUI();
+        t_WeaponName.text = s_PlayerWeaponManager.p_WeaponName;
+        t_CurrAmmoLeft.text = "Ammo:" + s_PlayerWeaponManager.p_TotalAmmo; 
     }
     public void UpdateGrenadeUI()
     {
