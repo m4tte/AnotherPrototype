@@ -22,6 +22,9 @@ public class PlayerUI : MonoBehaviour
     public Image i_EXP;
     public TextMeshProUGUI t_EXP;
     public TextMeshProUGUI t_CurrentLevel;
+
+    public TextMeshProUGUI t_PickUpWeapon;
+
     private void Awake()
     {
         s_PlayerHealth = FindObjectOfType<PlayerHealth>();
@@ -65,6 +68,14 @@ public class PlayerUI : MonoBehaviour
                 }
         }
 
+
+    }
+    public void PickUpWeaponUI(string name)
+    {
+        if (name != null)
+        t_PickUpWeapon.text = "Press 'E' to pick up " + name + '?';
+        else
+        t_PickUpWeapon.text = null;
 
     }
     public void UpdateWeaponUI()

@@ -29,8 +29,13 @@ public class PlayerWeaponManager : MonoBehaviour
 
     float nexttime_ToFire;
 
+    public GameObject knifeObject;
+    public GameObject currWeaponObject;
     public GameObject WeaponObject;
     public bool WeaponEquipped;
+
+    public Weapon pickupWeapon;
+
     private void Start()
     {
         s_PlayerUI = FindObjectOfType<PlayerUI>();
@@ -62,6 +67,12 @@ public class PlayerWeaponManager : MonoBehaviour
         p_TimeBeforeSelfDestruct = wt.p_TimeBeforeSelfDestruct;
         p_WeaponSoundClip = wt.p_WeaponSoundClip;
         isAuto = wt.isAuto;
+        Destroy(wt.gameObject);
+        knifeObject.SetActive(false);
+        currWeaponObject.SetActive(true);
+
+        s_PlayerUI.PickUpWeaponUI(null);
+
         WeaponEquipped = true;
 
         s_PlayerUI.UpdateWeaponUI();
@@ -105,6 +116,11 @@ public class PlayerWeaponManager : MonoBehaviour
         {
             ThrowWeapon();
         }
+        if (pickupWeapon !=null)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            ChangeWeapon(pickupWeapon);
+        }
     }
 
     public void Shoot()
@@ -130,7 +146,9 @@ public class PlayerWeaponManager : MonoBehaviour
         Rigidbody w_rb = w.GetComponent<Rigidbody>();
         w_rb.velocity = transform.forward * 30f;
         ClearWeapon();
-        gameObject.SetActive(false);
+
+        knifeObject.SetActive(true);
+        currWeaponObject.SetActive(false);
     }
     /*    void ThrowGrenade()
         {

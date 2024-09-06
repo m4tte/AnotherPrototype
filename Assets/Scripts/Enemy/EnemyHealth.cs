@@ -13,6 +13,8 @@ public class EnemyHealth : MonoBehaviour
     public GameObject ExpDrop;
     public GameObject WeaponPrefab;
 
+    public EnemyUI e_EnemyUI;
+
     private void Start()
     {
         health = maxHealth;
@@ -20,6 +22,7 @@ public class EnemyHealth : MonoBehaviour
     public void TakeDamage(int dmg)
     {
         health -= dmg;
+        e_EnemyUI.UpdateEnemyUI();
         if (health <= 0)
         {
             Instantiate(DeathSoundObject);
@@ -35,15 +38,19 @@ public class EnemyHealth : MonoBehaviour
                 }
             }
             if (GetComponent<EnemyRangeAttackBehaviour>() != null)
-            {
-                GameObject weapondrop = Instantiate(WeaponPrefab, transform.position, transform.rotation);
-                weapondrop.GetComponent<Weapon>().SetWeapon(GetComponent<EnemyRangeAttackBehaviour>().e_weaponType);
-                Rigidbody weapondrop_rb = weapondrop.GetComponent<Rigidbody>();
-                Vector3 AmmoDirection = Random.insideUnitSphere.normalized;
-                if (weapondrop_rb != null)
+            {   
+                if (!GetComponent<EnemyRangeAttackBehaviour>().e_GrenadeEnemy)
                 {
-                    weapondrop_rb.AddForce(AmmoDirection * .5f, ForceMode.Impulse);
+                    GameObject weapondrop = Instantiate(WeaponPrefab, transform.position, transform.rotation);
+                    weapondrop.GetComponent<Weapon>().SetWeapon(GetComponent<EnemyRangeAttackBehaviour>().e_weaponType);
+                    Rigidbody weapondrop_rb = weapondrop.GetComponent<Rigidbody>();
+                    Vector3 AmmoDirection = Random.insideUnitSphere.normalized;
+                    if (weapondrop_rb != null)
+                    {
+                        weapondrop_rb.AddForce(AmmoDirection * .5f, ForceMode.Impulse);
+                    }
                 }
+
             }
 
             FindObjectOfType<Flash>().Flashing();

@@ -62,18 +62,21 @@ public class Weapon : MonoBehaviour
         p_WeaponSoundClip = wt.GunShotAudio;
         isAuto = wt.isAuto;
     }
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.GetComponent<PlayerMovement>() != null)
+        {
+            //other.GetComponent<PlayerMovement>().PlayerWeapon.SetActive(true);
+            FindObjectOfType<PlayerWeaponManager>().pickupWeapon = this;
+            FindObjectOfType<PlayerUI>().PickUpWeaponUI(p_WeaponName);
+        }
+    }
+    private void OnTriggerExit(Collider other)
     {
         if (other.GetComponent<PlayerHealth>() != null)
         {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                FindObjectOfType<PlayerMovement>().PlayerWeapon.SetActive(true);
-                FindObjectOfType<PlayerWeaponManager>().ChangeWeapon(this);
-                Destroy(this.gameObject);
-            }
-
+            FindObjectOfType<PlayerWeaponManager>().pickupWeapon = null;
+            FindObjectOfType<PlayerUI>().PickUpWeaponUI(null);
         }
     }
-
 }
