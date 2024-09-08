@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 4227386484037611796}
   - component: {fileID: 4227386484037611789}
   - component: {fileID: 4227386484037611788}
+  - component: {fileID: 1210577467994751705}
   m_Layer: 0
   m_Name: SMGEnemy
   m_TagString: Untagged
@@ -107,7 +108,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4227386484037611797}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.99, y: 1.27, z: -5.54}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -222,6 +223,9 @@ MonoBehaviour:
   m_Range: 15
   m_CenterPoint: {fileID: 0}
   m_Target: {fileID: 0}
+  isStun: 0
+  e_StunTime: 3
+  e_StunTimeLeft: 0
 --- !u!195 &4227386484037611796
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -361,6 +365,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!54 &1210577467994751705
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4227386484037611797}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &4227386484448640167
 GameObject:
   m_ObjectHideFlags: 0

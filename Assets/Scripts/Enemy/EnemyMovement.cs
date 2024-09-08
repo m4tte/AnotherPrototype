@@ -29,6 +29,10 @@ public class EnemyMovement : MonoBehaviour
 
     public Transform m_Target;
 
+    public bool isStun;
+    public float e_StunTime;
+    public float e_StunTimeLeft;
+
     private void Start()
     {
         m_Agent = GetComponent<NavMeshAgent>();
@@ -56,21 +60,46 @@ public class EnemyMovement : MonoBehaviour
                 }
                 case MODE.ATTACKING:
                 {
-                    m_Agent.SetDestination(m_Target.position);
-                    if (m_Agent.remainingDistance <= m_Agent.stoppingDistance)
+                    if (!isStun)
                     {
-                        if(rangeAttackBehaviour != null)
-                            rangeAttackBehaviour.AttackPlayer();
+                        m_Agent.SetDestination(m_Target.position);
+                        if (m_Agent.remainingDistance <= m_Agent.stoppingDistance)
+                        {
+                            if (rangeAttackBehaviour != null)
+                                rangeAttackBehaviour.AttackPlayer();
 
-                        if (meleeAttackBehaviour != null)
-                            meleeAttackBehaviour.AttackPlayer();
+                            if (meleeAttackBehaviour != null)
+                                meleeAttackBehaviour.AttackPlayer();
+                        }
                     }
                     break;
                 }
         }
+        if (isStun)
+        {
+            CountStunTimer();
+        }
+
 
     }
-
+    public void StunEnemy()
+    {
+        isStun = true;
+        e_StunTimeLeft = e_StunTime;
+        m_Agent.speed = 0;
+    }
+    void CountStunTimer()
+    {
+        if (e_StunTimeLeft > 0)
+        {
+            e_StunTimeLeft -= Time.deltaTime;
+        }
+        else
+        {
+            isStun=false;
+            m_Agent.speed = s_MovementSpeed;
+        }
+    }
     bool RandomPoint(Vector3 center, float range, out Vector3 result)
     {
         Vector3 randomPoint = center + Random.insideUnitSphere * range;
