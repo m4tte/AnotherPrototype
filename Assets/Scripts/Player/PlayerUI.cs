@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class PlayerUI : MonoBehaviour
 {
@@ -22,6 +23,12 @@ public class PlayerUI : MonoBehaviour
     public Image i_EXP;
     public TextMeshProUGUI t_EXP;
     public TextMeshProUGUI t_CurrentLevel;
+
+    [Header("SlowDownUI")]
+    public Image i_SlowDownImage;
+
+    [Header("KickDoorUI")]
+    public TextMeshProUGUI t_KickDoor;
 
     public TextMeshProUGUI t_PickUpWeapon;
 
@@ -82,6 +89,15 @@ public class PlayerUI : MonoBehaviour
     {
         t_WeaponName.text = s_PlayerWeaponManager.p_WeaponName;
         t_CurrAmmoLeft.text = "Ammo:" + s_PlayerWeaponManager.p_TotalAmmo; 
+    }
+    public void SlowDownUI()
+    {
+        i_SlowDownImage.fillAmount = s_PlayerWeaponManager.currSlowDownTime / s_PlayerWeaponManager.maxSlowDownTime;
+    }
+
+    public void KickDoorUI(string text)
+    {
+        t_KickDoor.text = text;
     }
     public void UpdateGrenadeUI()
     {

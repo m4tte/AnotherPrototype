@@ -21,6 +21,11 @@ public class PlayerWeaponManager : MonoBehaviour
     public float p_TimeBeforeSelfDestruct;
     public AudioClip p_WeaponSoundClip;
 
+    [Header("SlowDownStats")]
+    public bool isSlowDown;
+    public float maxSlowDownTime;
+    public float currSlowDownTime;
+    public float slowDownTimeScale;
 
     public GameObject p_Projectile;
     public Transform p_Spawnpos;
@@ -40,6 +45,8 @@ public class PlayerWeaponManager : MonoBehaviour
     {
         s_PlayerUI = FindObjectOfType<PlayerUI>();
         s_PlayerUI.UpdateWeaponUI();
+
+        currSlowDownTime = maxSlowDownTime;
     }
     public void ChangeWeapon(Weapon wt)
     {
@@ -112,7 +119,7 @@ public class PlayerWeaponManager : MonoBehaviour
             s_PlayerUI.UpdateWeaponUI();
 
         }
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetMouseButtonDown(1) && WeaponEquipped)
         {
             ThrowWeapon();
         }
@@ -120,6 +127,17 @@ public class PlayerWeaponManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             ChangeWeapon(pickupWeapon);
+        }
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            if (!isSlowDown && currSlowDownTime > 0)
+                StartSlowDownTime();
+            else
+                StopSlowDownTime();
+        }
+        if (isSlowDown)
+        {
+            ActivateSlowDownEffect();
         }
     }
 
@@ -150,17 +168,27 @@ public class PlayerWeaponManager : MonoBehaviour
         knifeObject.SetActive(true);
         currWeaponObject.SetActive(false);
     }
-    /*    void ThrowGrenade()
+    public void StartSlowDownTime()
+    {
+        isSlowDown = true;
+        Time.timeScale = slowDownTimeScale;
+    }
+
+    public void ActivateSlowDownEffect()
+    {
+        if (currSlowDownTime > 0)
         {
-            // Instantiate the grenade at the player's position
-            GameObject grenade = Instantiate(p_Grenade, p_Spawnpos.position, p_Spawnpos.rotation);
-
-            // Add force to the grenade
-            Rigidbody rb = grenade.GetComponent<Rigidbody>();
-            rb.AddForce(-(transform.forward * p_ThrowForce), ForceMode.VelocityChange);
-
-            p_GrenadeRemaining--;
-
-            s_PlayerUI.UpdateGrenadeUI();
-        }*/
+            currSlowDownTime -= Time.deltaTime*2f;
+        }
+        else
+        {
+            StopSlowDownTime();
+        }
+        s_PlayerUI.SlowDownUI();
+    }
+    public void StopSlowDownTime()
+    {
+        isSlowDown = false;
+        Time.timeScale = 1;
+    }
 }

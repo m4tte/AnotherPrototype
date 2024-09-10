@@ -344,7 +344,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e68151fa8f723645ae612034c620109, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  e_weaponType: {fileID: 0}
+  e_weaponType: {fileID: 11400000, guid: af5816a103c61154b93c3b47015e5fc8, type: 2}
   e_Projectile: {fileID: 584065255677097293, guid: ca3ad3c93c23dc64187cd331fff8942f, type: 3}
   e_SpawnPos: {fileID: 2122130600780442462}
   e_RateOfAttack: 2
